@@ -27,4 +27,95 @@ public class MathControllerTest {
                 .andExpect(content().string("3.141592653589793"));
     }
 
+    @Test
+    public void testCalculateAdd46() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?operation=add&x=4&y=6");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("4 + 6 = 10"));
+
+    }
+
+    @Test
+    public void testCalculateAdd35() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?operation=add&x=3&y=5");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("3 + 5 = 8"));
+
+    }
+
+    @Test
+    public void testCalculateEmpty12() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?x=1&y=2");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("1 + 2 = 3"));
+
+    }
+
+    @Test
+    public void testCalculateMultiply36() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?operation=multiply&x=3&y=6");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("3 * 6 = 18"));
+
+    }
+
+    @Test
+    public void testCalculateMultiply46() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?operation=multiply&x=4&y=6");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("4 * 6 = 24"));
+
+    }
+
+    @Test
+    public void testCalculateSubtract46() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?operation=subtract&x=4&y=6");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("4 - 6 = -2"));
+
+    }
+
+    @Test
+    public void testCalculateDivide305() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?operation=divide&x=30&y=5");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("30 / 5 = 6"));
+
+    }
+
+    @Test
+    public void testSum456() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.post("/math/sum?n=4&n=5&n=6");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("4 + 5 + 6 = 15"));
+
+    }
+
+    @Test
+    public void testSum789() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.post("/math/sum?n=7&n=8&n=9");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("7 + 8 + 9 = 24"));
+
+    }
+
+
 }

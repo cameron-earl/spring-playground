@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(MathController.class)
 public class MathControllerTest {
     @Autowired
-    MockMvc mvc;
+    private MockMvc mvc;
 
     @Test
     public void testPi() throws Exception {
@@ -115,6 +115,24 @@ public class MathControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("7 + 8 + 9 = 24"));
 
+    }
+
+    @Test
+    public void testVolume345() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.post("/math/volume/3/4/5");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of a 3x4x5 rectangle is 60"));
+    }
+
+    @Test
+    public void testVolume135() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.post("/math/volume/1/3/5");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of a 1x3x5 rectangle is 15"));
     }
 
 

@@ -32,4 +32,22 @@ public class MathController {
         return String.format("The volume of a %dx%dx%d rectangle is %d",h,w,l,h*w*l);
     }
 
+    @PostMapping("area")
+    public String area(
+        @RequestParam String type,
+        @RequestParam(value = "radius", defaultValue = "-1") int radius,
+        @RequestParam(value = "width", defaultValue = "-1") int width,
+        @RequestParam(value = "height", defaultValue = "-1") int height
+    ) {
+        if (type.equals("circle") && radius >= 0) {
+            double area = Math.PI * radius * radius;
+            return String.format("Area of a circle with a radius of %d is %.5f", radius, area);
+        } else if (type.equals("rectangle") && width >= 0 && height >= 0) {
+            int area = height * width;
+            return String.format("Area of a %dx%d rectangle is %d", width, height, area);
+        } else {
+            return "Invalid";
+        }
+    }
+
 }

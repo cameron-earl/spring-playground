@@ -4,11 +4,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -135,5 +138,41 @@ public class MathControllerTest {
                 .andExpect(content().string("The volume of a 1x3x5 rectangle is 15"));
     }
 
+    @Test
+    public void testAreaCircle2() throws Exception {
+        MockHttpServletRequestBuilder req = post("/math/area")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("type", "circle")
+                .param("radius", "4");
+
+        this.mvc.perform(req)
+                .andExpect(status().isOk())
+                .andExpect(content().string("Area of a circle with a radius of 4 is 50.26548"));
+    }
+
+    @Test
+    public void testAreaRect47() throws Exception {
+        MockHttpServletRequestBuilder req = post("/math/area")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("type", "rectangle")
+                .param("width", "4")
+                .param("height", "7");
+
+        this.mvc.perform(req)
+                .andExpect(status().isOk())
+                .andExpect(content().string("Area of a 4x7 rectangle is 28"));
+    }
+
+    @Test
+    public void testAreaInvalid() throws Exception {
+        MockHttpServletRequestBuilder req = post("/math/area")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("type", "rectangle")
+                .param("radius", "4");
+
+        this.mvc.perform(req)
+                .andExpect(status().isOk())
+                .andExpect(content().string("Invalid"));
+    }
 
 }

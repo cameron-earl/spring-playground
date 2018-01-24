@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,9 +40,49 @@ public class FlightsController {
 //        return flight;
 //    }
 
+
+    @RequestMapping("tickets/total")
+    public Result total(@RequestBody Flight flight) {
+        int sum = 0;
+        int len = flight.tickets.size();
+        for (int i = 0; i < len; i++ ){
+            sum += flight.tickets.get(i).price;
+        }
+//        System.out.println(sum);
+//        return sum;
+        return new Result(sum);
+    }
+
+    public static class Result {
+        private int result;
+
+        @JsonCreator
+        Result(
+                @JsonProperty("result") int result
+        ) {
+            this.result = result;
+        }
+
+        public int getResult() {
+            return result;
+        }
+
+        public void setResult(int result) {
+            this.result = result;
+        }
+    }
+
     public static class Flight {
         private Date departs;
         private List<Ticket> tickets;
+
+        @JsonCreator
+        Flight(
+                @JsonProperty("tickets") List<Ticket> tickets
+        ) {
+            this.departs = null;
+            this.tickets = tickets;
+        }
 
         @JsonCreator
         Flight(
